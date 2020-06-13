@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 
+
 Vue.use(VueRouter)
 
   const routes = [
@@ -17,6 +18,18 @@ Vue.use(VueRouter)
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+  },
+  {
+    path: '/images',
+    name: 'Images',
+    component: () => import('../views/ImageApiViews/Images.vue'),
+    children: [
+      // '' = default component
+      // { path: '', component: () => import('../views/ImageApiViews/CatApi.vue'), },
+      { path: 'cat', component: () => import('../views/ImageApiViews/CatApi.vue'), },
+      { path: 'dog', component: () => import('../views/ImageApiViews/DogApi.vue'), },
+      { path: 'picsum', component: () => import('../views/ImageApiViews/PicsumApi.vue'), },
+    ]
   }
 ]
 

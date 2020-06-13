@@ -36,7 +36,10 @@ export default {
   name: 'HelloWorld',
   props: {
     msg: String
-  }
+  },
+  mounted: function() {
+    this.axios.get('https://jsonplaceholder.typicode.com/todos')
+  },
 }
 </script>
 
