@@ -1,4 +1,4 @@
-# api-hub
+# apis-hub
 
 ## Project setup
 ```

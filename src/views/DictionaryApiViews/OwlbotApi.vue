@@ -1,14 +1,15 @@
 <template>
   <div>
     <ApiHeader :title="title" :apiWebsiteLink="apiWebsiteLink"></ApiHeader>
-
     <div>
-      <ApiTag :requireKey="false"></ApiTag>
+      <ApiTag :requireKey="true"></ApiTag>
     </div>
     <ApiHelper />
+
+    <label for="word">Word</label>
+    <VInput @inputSubmit="getApiData" v-model="word" :inputId="'word'"></VInput>
     <VButton @clicked="getApiData"></VButton>
     <VJsonResponse v-if="apiResult" :apiResult="apiResult"></VJsonResponse>
-    <ImageView :imgSrc="imgSrc" />
   </div>
 </template>
 
@@ -16,47 +17,54 @@
 <script>
 import VButton from '@/components/VButton.vue';
 import VJsonResponse from '@/components/VJsonResponse.vue';
-import ImageView from '@/components/ImageView.vue';
+import VInput from '@/components/VInput.vue';
 import ApiHeader from '@/components/ApiHeader.vue'
 import ApiTag from '@/components/ApiTag.vue'
 import ApiHelper from '@/components/ApiHelper.vue';
 
 
 export default {
-  name: 'DogApi',
+  name: 'OwlbotApi',
   mixins: [],
   components: {
     VButton,
-    ImageView,
     VJsonResponse,
+    VInput,
     ApiHeader,
     ApiTag,
     ApiHelper
   },
   data: function() {
     return {
-      title: 'Random.Dog API',
-      apiWebsiteLink: 'https://random.dog',
-      url: 'https://random.dog/woof.json',
-      // url: 'http://localhost:3000',
-      imgSrc : '',
+      title: 'Owlbot API',
+      apiWebsiteLink: 'https://owlbot.info/',
+      apiKey: process.env.VUE_APP_API_KEY_OWLBOT,
+      url: 'https://owlbot.info/api/v4/dictionary/',
       apiResult: null,
+      word: '',
     }
   },
   methods: {
     getApiData: function() {
-      this.imgSrc = null;
       this.$store.commit('toggleIsLoadingResult');
 
-      this.axios.get(this.url)
+      this.axios.get(this.apiUrl, {
+        headers: {
+          'Authorization': `Token ${this.apiKey}`
+        }
+        })
         .then(response => {
-          this.imgSrc = response.data.url;
           this.apiResult = response.data;
         })
-        .catch(() => console.log("Something went wrong."))
+        .catch(() => this.apiResult = {error: "Something went wrong!"})
         .then(() => this.$store.commit('toggleIsLoadingResult'));
-    },
+    }
   },
+  computed: {
+    apiUrl: function() {
+      return this.url + this.word;
+    }
+  }
 }
 </script>
 

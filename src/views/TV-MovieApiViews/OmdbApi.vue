@@ -3,60 +3,64 @@
     <ApiHeader :title="title" :apiWebsiteLink="apiWebsiteLink"></ApiHeader>
 
     <div>
-      <ApiTag :requireKey="false"></ApiTag>
+      <ApiTag :requireKey="true"></ApiTag>
     </div>
     <ApiHelper />
+    <label for="VInput">Movie Title</label>
+    <VInput @inputSubmit="getApiData" v-model="movie_title" :inputId="'movie_title'"></VInput>
     <VButton @clicked="getApiData"></VButton>
     <VJsonResponse v-if="apiResult" :apiResult="apiResult"></VJsonResponse>
-    <ImageView :imgSrc="imgSrc" />
   </div>
 </template>
 
 
 <script>
+import ApiHeader from '@/components/ApiHeader.vue';
 import VButton from '@/components/VButton.vue';
 import VJsonResponse from '@/components/VJsonResponse.vue';
-import ImageView from '@/components/ImageView.vue';
-import ApiHeader from '@/components/ApiHeader.vue'
-import ApiTag from '@/components/ApiTag.vue'
+import VInput from '@/components/VInput.vue';
+import ApiTag from '@/components/ApiTag.vue';
 import ApiHelper from '@/components/ApiHelper.vue';
 
 
 export default {
-  name: 'DogApi',
+  name: 'OmdbApi',
   mixins: [],
   components: {
-    VButton,
-    ImageView,
-    VJsonResponse,
     ApiHeader,
+    VButton,
+    VJsonResponse,
+    VInput,
     ApiTag,
     ApiHelper
   },
   data: function() {
     return {
-      title: 'Random.Dog API',
-      apiWebsiteLink: 'https://random.dog',
-      url: 'https://random.dog/woof.json',
-      // url: 'http://localhost:3000',
-      imgSrc : '',
+      title: 'OMDB - Open Movie Database API',
+      apiWebsiteLink: 'https://www.omdbapi.com/',
+      apiKey: process.env.VUE_APP_API_KEY_OMDB,
+      url: 'http://www.omdbapi.com/?',
       apiResult: null,
+      movie_title: '',
     }
   },
   methods: {
     getApiData: function() {
-      this.imgSrc = null;
       this.$store.commit('toggleIsLoadingResult');
 
-      this.axios.get(this.url)
+      this.axios.get(this.apiUrl + `s=${this.movie_title}`)
         .then(response => {
-          this.imgSrc = response.data.url;
           this.apiResult = response.data;
         })
         .catch(() => console.log("Something went wrong."))
         .then(() => this.$store.commit('toggleIsLoadingResult'));
     },
   },
+  computed: {
+    apiUrl: function() {
+      return this.url + `apikey=${this.apiKey}&`;
+    }
+  }
 }
 </script>
 

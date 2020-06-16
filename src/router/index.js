@@ -30,6 +30,24 @@ Vue.use(VueRouter)
       { path: 'dog', component: () => import('../views/ImageApiViews/DogApi.vue'), },
       { path: 'picsum', component: () => import('../views/ImageApiViews/PicsumApi.vue'), },
     ]
+  },
+  {
+    path: '/tv-movies',
+    name: 'TV-Movies',
+    component: () => import('../views/TV-MovieApiViews/TV-Movies.vue'),
+    children: [
+      { path: 'omdb', component: () => import('../views/TV-MovieApiViews/OmdbApi.vue'), },
+      { path: 'tmdb', component: () => import('../views/TV-MovieApiViews/TmdbApi.vue'), },
+    ]
+  },
+  {
+    path: '/dictionaries',
+    name: 'Dictionaries',
+    component: () => import('../views/DictionaryApiViews/Dictionaries.vue'),
+    children: [
+      { path: 'owlbot', component: () => import('../views/DictionaryApiViews/OwlbotApi.vue'), },
+      { path: 'merriam-webster', component: () => import('../views/DictionaryApiViews/MerriamWebsterApi.vue'), },
+    ]
   }
 ]
 

@@ -1,26 +1,39 @@
 <template>
   <div>
-    <h1>Shibe API Header</h1>
-    <VButton @click.native="getApiData"></VButton>
-    <ImageView v-bind:imgSrc="imgSrc" />
+    <ApiHeader :title="title" :apiWebsiteLink="apiWebsiteLink"></ApiHeader>
+
+    <div>
+      <ApiTag :requireKey="false"></ApiTag>
+    </div>
+    <ApiHelper />
+    <VButton @clicked="getApiData"></VButton>
+    <ImageView :imgSrc="imgSrc" />
   </div>
 </template>
 
 
 <script>
-import updateApiUrlMixin from '@/mixins/updateApiUrlMixin.js';
 import VButton from '@/components/VButton.vue'
 import ImageView from '@/components/ImageView.vue'
+import ApiHeader from '@/components/ApiHeader.vue'
+import ApiHelper from '@/components/ApiHelper.vue'
+import ApiTag from '@/components/ApiTag.vue'
+
 
 export default {
   name: 'PicsumApi',
-  mixins: [updateApiUrlMixin],
+  mixins: [],
   components: {
     VButton,
-    ImageView
+    ImageView,
+    ApiHeader,
+    ApiHelper,
+    ApiTag
   },
   data: function() {
     return {
+      title: 'Lorem Picsum',
+      apiWebsiteLink: 'https://picsum.photos/',
       url: 'https://picsum.photos/600/500/',
       imgSrc : '',
     }
@@ -28,7 +41,8 @@ export default {
   methods: {
     getApiData: function() {
       this.imgSrc = '';
-
+      this.$store.commit('toggleIsLoadingResult');
+      
       fetch(this.url)
         .then(response => response.blob())
         .catch(() => console.log("Something went wrong."))
@@ -40,6 +54,7 @@ export default {
                 this.imgSrc = base64data.toString();
             }
         })
+        .then(() => this.$store.commit('toggleIsLoadingResult'));
     },
   },
 }
