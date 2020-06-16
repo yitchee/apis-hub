@@ -6,7 +6,7 @@
     </div>
     <ApiHelper />
 
-    <label for="word">Word</label>
+    <label for="word">Search Definition:</label>
     <VInput @inputSubmit="getApiData" v-model="word" :inputId="'word'"></VInput>
     <VButton @clicked="getApiData"></VButton>
     <VJsonResponse v-if="apiResult" :apiResult="apiResult"></VJsonResponse>

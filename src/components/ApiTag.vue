@@ -11,10 +11,7 @@
 
 
 <script>
-import friconixMixin from '@/mixins/friconixMixin.js';
-
 export default {
   props: ['requireKey'],
-  mixins: [friconixMixin],
 }
 </script>

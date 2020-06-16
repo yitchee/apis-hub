@@ -1,6 +1,6 @@
 <template>
   <div class="mb-3">
-    <input @keyup.enter="inputSubmit" type="text" v-model="inputVal" :id="inputId"
+    <input @keyup.enter="inputSubmit" type="number" v-model="inputVal" :id="inputId"
     class="bg-white focus:border-blue-400 border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal">
   </div>
 </template>
@@ -30,3 +30,10 @@ export default {
   }
 }
 </script>
+
+
+<style scoped>
+input[type='number'] {
+  -moz-appearance:textfield;
+}
+</style>

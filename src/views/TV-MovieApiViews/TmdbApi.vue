@@ -38,7 +38,7 @@ export default {
       title: 'TMDB - The Movie Database Api',
       apiWebsiteLink: 'https://www.themoviedb.org/documentation/api',
       apiKey: process.env.VUE_APP_API_KEY_TMDB,
-      url: ' https://api.themoviedb.org/3/search/movie?',
+      url: 'https://api.themoviedb.org/3/search/movie?',
       apiResult: null,
       movie_title: '',
     }

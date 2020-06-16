@@ -1,11 +1,11 @@
 <template>
   <div class="cat-api">
     <ApiHeader :title="title" :apiWebsiteLink="apiWebsiteLink"></ApiHeader>
-    <div class="mb-2">
+    <div class="mb-4">
       This is a simple API that returns an object that contains a URL of the random cat picture. Simply 
-      call <code>http://aws.random.cat/meow</code> and every request will return 
-      a different picture. The available file extensions are <code>.jgp</code>, <code>.jpeg</code>, and 
-      <code>.gif</code> .
+      call <code>http://aws.random.cat/meow</code> and every request will return a different 
+      picture. The available file extensions are <code>.jgp</code>, <code>.jpeg</code>, 
+      <code>.png</code>, and <code>.gif</code> .
     </div>
     <div>
       <ApiTag :requireKey="false"></ApiTag>
@@ -67,9 +67,4 @@ export default {
 
 
 <style lang="scss" scoped>
-.cat-api {
-  code {
-    @apply .rounded .pl-2 .pr-2 .bg-gray-300;
-  }
-}
 </style>

@@ -34,6 +34,6 @@ body { margin: 0; }
 }
 
 a.router-link-active {
-  color: #268dec;
+  @apply .font-bold .text-blue-400
 }
 </style>

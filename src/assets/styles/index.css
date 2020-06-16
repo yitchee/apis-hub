@@ -5,3 +5,7 @@
 a {
   outline: none;
 }
+
+code {
+  @apply .rounded .pl-2 .pr-2 .bg-gray-300;
+}

@@ -1,7 +1,13 @@
 <template>
-  <div>
+  <div class="dog-api">
     <ApiHeader :title="title" :apiWebsiteLink="apiWebsiteLink"></ApiHeader>
-
+    <div class="mb-4">
+      This is a fast and basic API that returns an object containing a URL of a random dog picture and its file size. Simply 
+      call <code>https://random.dog/woof.json</code> and every request will return a different response
+      everytime. The available file extensions are <code>.jgp</code>, <code>.jpeg</code>, <code>.png</code>,  
+      <code>.gif</code>, <code>.mp4</code>, and <code>.webm</code>.
+    </div>
+    <aside class="text-gray-500 italic text-sm mb-2">Note: .mp4 and .webm files won't be displyed properly on this site.</aside>
     <div>
       <ApiTag :requireKey="false"></ApiTag>
     </div>
@@ -61,6 +67,5 @@ export default {
 </script>
 
 
-<style>
-
+<style lang="scss" scoped>
 </style>
