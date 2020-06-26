@@ -1,6 +1,12 @@
 <template>
   <div>
     <ApiHeader :title="title" :apiWebsiteLink="apiWebsiteLink"></ApiHeader>
+    <div class="mb-4">
+      <div>
+        The Merriam-Webster Dictionary API gives developers access to a comprehensive resource of 
+        dictionary and thesaurus content
+      </div>
+    </div>
     <div>
       <ApiTag :requireKey="true"></ApiTag>
     </div>
@@ -9,7 +15,7 @@
     <label for="word">Search Definition:</label>
     <VInput @inputSubmit="getApiData" v-model="word" :inputId="'word'"></VInput>
     <VButton @clicked="getApiData"></VButton>
-    <VJsonResponse v-if="apiResult" :apiResult="apiResult"></VJsonResponse>
+    <VJsonResponse :apiResult="apiResult"></VJsonResponse>
   </div>
 </template>
 
@@ -18,8 +24,8 @@
 import VButton from '@/components/VButton.vue';
 import VJsonResponse from '@/components/VJsonResponse.vue';
 import VInput from '@/components/VInput.vue';
-import ApiHeader from '@/components/ApiHeader.vue'
-import ApiTag from '@/components/ApiTag.vue'
+import ApiHeader from '@/components/ApiHeader.vue';
+import ApiTag from '@/components/ApiTag.vue';
 import ApiHelper from '@/components/ApiHelper.vue';
 
 

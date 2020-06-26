@@ -1,6 +1,6 @@
 <template>
   <div class="mb-3">
-    <input @keyup.enter="inputSubmit" type="text" v-model="inputVal" :id="inputId"
+    <input @keyup.enter="inputSubmit" type="text" v-model="inputVal" :id="inputId" :placeholder="placeholderText"
     class="bg-white focus:border-blue-400 border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal">
   </div>
 </template>
@@ -12,7 +12,7 @@ export default {
     return {
     }
   },
-  props: ['inputId'],
+  props: ['inputId', 'placeholderText'],
   methods: {
     inputSubmit: function() {
       this.$emit('inputSubmit');

@@ -4,7 +4,7 @@
     <div class="mb-4">
       This is a simple API that returns an object that contains a URL of the random cat picture. Simply 
       call <code>http://aws.random.cat/meow</code> and every request will return a different 
-      picture. The available file extensions are <code>.jgp</code>, <code>.jpeg</code>, 
+      picture. The available file extensions are <code>.jpg</code>, <code>.jpeg</code>, 
       <code>.png</code>, and <code>.gif</code> .
     </div>
     <div>
@@ -12,7 +12,7 @@
     </div>
     <ApiHelper />
     <VButton @clicked="getApiData"></VButton>
-    <VJsonResponse v-if="apiResult" :apiResult="apiResult"></VJsonResponse>
+    <VRequestResponse :showResult="showResult" :requestUrl="requestUrlToShow" :apiResult="apiResult"></VRequestResponse>
     <ImageView :imgSrc="imgSrc" />
   </div>
 </template>
@@ -20,20 +20,22 @@
 
 <script>
 import VButton from '@/components/VButton.vue'
-import VJsonResponse from '@/components/VJsonResponse.vue';
+import VRequestResponse from '@/components/VRequestResponse.vue';
 import ImageView from '@/components/ImageView.vue'
 import ApiHeader from '@/components/ApiHeader.vue'
 import ApiHelper from '@/components/ApiHelper.vue'
 import ApiTag from '@/components/ApiTag.vue'
 
+import responseMixin from '@/mixins/responseMixin.js';
+
 
 export default {
   name: 'CatApi',
-  mixins: [],
+  mixins: [responseMixin],
   components: {
     VButton,
     ImageView,
-    VJsonResponse,
+    VRequestResponse,
     ApiHeader,
     ApiHelper,
     ApiTag
@@ -42,7 +44,8 @@ export default {
     return {
       title: 'Random.Cat API',
       apiWebsiteLink: 'https://random.cat',
-      url: 'https://aws.random.cat/meow',
+      apiUrl: 'https://aws.random.cat/meow',
+      url: 'http://localhost:3000/images/random.cat',
       imgSrc : '',
       apiResult: null,
     }
@@ -59,7 +62,11 @@ export default {
           this.apiResult = response.data;
         })
         .catch(() => console.log("Something went wrong."))
-        .then(() => this.$store.commit('toggleIsLoadingResult'));
+        .then(() => {
+          this.$store.commit('toggleIsLoadingResult');
+          this.setShowResult();
+          this.setRequestUrlToShow(this.apiUrl);
+        });
     },
   },
 }

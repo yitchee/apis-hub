@@ -4,7 +4,7 @@
     <div class="mb-4">
       This is a fast and basic API that returns an object containing a URL of a random dog picture and its file size. Simply 
       call <code>https://random.dog/woof.json</code> and every request will return a different response
-      everytime. The available file extensions are <code>.jgp</code>, <code>.jpeg</code>, <code>.png</code>,  
+      everytime. The available file extensions are <code>.jpg</code>, <code>.jpeg</code>, <code>.png</code>,  
       <code>.gif</code>, <code>.mp4</code>, and <code>.webm</code>.
     </div>
     <aside class="text-gray-500 italic text-sm mb-2">Note: .mp4 and .webm files won't be displyed properly on this site.</aside>
@@ -13,7 +13,7 @@
     </div>
     <ApiHelper />
     <VButton @clicked="getApiData"></VButton>
-    <VJsonResponse v-if="apiResult" :apiResult="apiResult"></VJsonResponse>
+    <VRequestResponse :showResult="showResult" :requestUrl="requestUrlToShow" :apiResult="apiResult"></VRequestResponse>
     <ImageView :imgSrc="imgSrc" />
   </div>
 </template>
@@ -21,20 +21,22 @@
 
 <script>
 import VButton from '@/components/VButton.vue';
-import VJsonResponse from '@/components/VJsonResponse.vue';
+import VRequestResponse from '@/components/VRequestResponse.vue';
 import ImageView from '@/components/ImageView.vue';
 import ApiHeader from '@/components/ApiHeader.vue'
 import ApiTag from '@/components/ApiTag.vue'
 import ApiHelper from '@/components/ApiHelper.vue';
 
+import responseMixin from '@/mixins/responseMixin.js';
+
 
 export default {
   name: 'DogApi',
-  mixins: [],
+  mixins: [responseMixin],
   components: {
     VButton,
     ImageView,
-    VJsonResponse,
+    VRequestResponse,
     ApiHeader,
     ApiTag,
     ApiHelper
@@ -43,8 +45,8 @@ export default {
     return {
       title: 'Random.Dog API',
       apiWebsiteLink: 'https://random.dog',
-      url: 'https://random.dog/woof.json',
-      // url: 'http://localhost:3000',
+      apiUrl: 'https://random.dog/woof.json',
+      url: 'http://localhost:3000/images/random.dog',
       imgSrc : '',
       apiResult: null,
     }
@@ -60,7 +62,11 @@ export default {
           this.apiResult = response.data;
         })
         .catch(() => console.log("Something went wrong."))
-        .then(() => this.$store.commit('toggleIsLoadingResult'));
+        .then(() => {
+          this.$store.commit('toggleIsLoadingResult');
+          this.setShowResult();
+          this.setRequestUrlToShow(this.apiUrl);
+        });
     },
   },
 }
