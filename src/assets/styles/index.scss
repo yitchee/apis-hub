@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+a {
+  outline: none;
+}
+
+.external-links {
+  @apply .text-blue-500;
+
+  &:hover {
+    @apply .text-orange-600 .underline;
+  }
+}
+
+code {
+  @apply .rounded .pl-2 .pr-2 .bg-gray-300;
+
+  span{
+    &.query-variable {
+      color: #e7402d;
+    }
+    &.query-value {
+      color: #1cc462;
+    }
+  }
+}
+
+.required-label {
+  color: red;
+  font-weight: bold;
+}

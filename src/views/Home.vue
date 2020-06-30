@@ -1,7 +1,9 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" class="mx-auto" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="home w-full flex-wrap">
+    <div class="w-full">
+      <img alt="Vue logo" class="flex-none self-start w-1/8 mx-auto" src="../assets/logo.png">
+    </div>
+    <HelloWorld msg="Welcome to Your Vue.js App" class=""/>
   </div>
 </template>
 

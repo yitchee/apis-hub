@@ -9,16 +9,17 @@
       </div>
       <div>
         The API can be accessed through <code>http://www.omdbapi.com/?apikey=[yourkey]</code> followed by 
-        the query parameters. Visit he <a :href="apiWebsiteLink" class="text-blue-500 hover:underline hover:text-blue-700">OMDb website</a> to 
+        the query parameters. Visit he <a :href="apiWebsiteLink" class="external-links" target="_blank">OMDb website</a> to 
         see all of the valid arguments. You can try it out below to see a working request.
       </div>
     </div>
-    <div>
-      <ApiTag :requireKey="true"></ApiTag>
+    <div class="flex flex-col sm:flex-row">
+      <ApiKeyTag :requireKey="true" class="mb-1 sm:mb-0"></ApiKeyTag>
+      <ApiLimitTag :limit="'1000 / day'"></ApiLimitTag>
     </div>
     <ApiHelper />
-    <label for="VInput">Title</label>
     <div class="flex flex-wrap">
+      <label for="VInput">Title <span class="required-label">*</span></label>
       <VInput @inputSubmit="getApiData" v-model="media_title" :inputId="'movie_title'" class="flex-none w-full" :placeholderText="'default value is \'Logan\''"></VInput>
       <div class="relative flex-none mr-8">
         <label>Type</label>
@@ -53,7 +54,8 @@ import VButton from '@/components/VButton.vue';
 import VRequestResponse from '@/components/VRequestResponse.vue';
 import VInput from '@/components/VInput.vue';
 import VInputNumber from '@/components/VInputNumber.vue';
-import ApiTag from '@/components/ApiTag.vue';
+import ApiKeyTag from '@/components/ApiKeyTag.vue';
+import ApiLimitTag from '@/components/ApiLimitTag.vue';
 import ApiHelper from '@/components/ApiHelper.vue';
 
 import responseMixin from '@/mixins/responseMixin.js';
@@ -68,7 +70,8 @@ export default {
     VRequestResponse,
     VInput,
     VInputNumber,
-    ApiTag,
+    ApiKeyTag,
+    ApiLimitTag,
     ApiHelper
   },
   data: function() {
@@ -77,7 +80,6 @@ export default {
       apiWebsiteLink: 'https://www.omdbapi.com/',
       apiUrl: 'http://www.omdbapi.com/?',
       url: 'http://localhost:3000/tv-movies/omdb?',
-      finalUrlToShow: '',
       apiResult: null,
       media_title: '',
       media_type: '',
@@ -92,7 +94,7 @@ export default {
       this.axios.get(this.requestUrl)
         .then(response => {
           this.apiResult = response.data;
-          this.finalUrlToShow = this.urlToShow;
+          this.setFinalRequestUrlToShow(this.urlToShow);
         })
         .catch(() => console.log("Something went wrong."))
         .then(() => {
@@ -129,7 +131,7 @@ export default {
       return finalUrl;
     },
     urlToShow: function() {
-      let finalUrl = this.generateRequestUrl(this.apiUrl) + `&apikey=<<API_KEY>>`;
+      let finalUrl = this.generateRequestUrl(this.apiUrl) + `&apikey=[API_KEY]`;
       return finalUrl;
     }
   }

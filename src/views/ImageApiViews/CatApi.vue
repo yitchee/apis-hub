@@ -8,11 +8,11 @@
       <code>.png</code>, and <code>.gif</code> .
     </div>
     <div>
-      <ApiTag :requireKey="false"></ApiTag>
+      <ApiKeyTag :requireKey="false"></ApiKeyTag>
     </div>
     <ApiHelper />
     <VButton @clicked="getApiData"></VButton>
-    <VRequestResponse :showResult="showResult" :requestUrl="requestUrlToShow" :apiResult="apiResult"></VRequestResponse>
+    <VRequestResponse :showResult="showResult" :requestUrl="finalUrlToShow" :apiResult="apiResult"></VRequestResponse>
     <ImageView :imgSrc="imgSrc" />
   </div>
 </template>
@@ -24,7 +24,7 @@ import VRequestResponse from '@/components/VRequestResponse.vue';
 import ImageView from '@/components/ImageView.vue'
 import ApiHeader from '@/components/ApiHeader.vue'
 import ApiHelper from '@/components/ApiHelper.vue'
-import ApiTag from '@/components/ApiTag.vue'
+import ApiKeyTag from '@/components/ApiKeyTag.vue'
 
 import responseMixin from '@/mixins/responseMixin.js';
 
@@ -38,7 +38,7 @@ export default {
     VRequestResponse,
     ApiHeader,
     ApiHelper,
-    ApiTag
+    ApiKeyTag
   },
   data: function() {
     return {
@@ -65,7 +65,7 @@ export default {
         .then(() => {
           this.$store.commit('toggleIsLoadingResult');
           this.setShowResult();
-          this.setRequestUrlToShow(this.apiUrl);
+          this.setFinalRequestUrlToShow(this.apiUrl);
         });
     },
   },

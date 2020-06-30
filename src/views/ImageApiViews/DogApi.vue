@@ -9,11 +9,11 @@
     </div>
     <aside class="text-gray-500 italic text-sm mb-2">Note: .mp4 and .webm files won't be displyed properly on this site.</aside>
     <div>
-      <ApiTag :requireKey="false"></ApiTag>
+      <ApiKeyTag :requireKey="false"></ApiKeyTag>
     </div>
     <ApiHelper />
     <VButton @clicked="getApiData"></VButton>
-    <VRequestResponse :showResult="showResult" :requestUrl="requestUrlToShow" :apiResult="apiResult"></VRequestResponse>
+    <VRequestResponse :showResult="showResult" :requestUrl="finalUrlToShow" :apiResult="apiResult"></VRequestResponse>
     <ImageView :imgSrc="imgSrc" />
   </div>
 </template>
@@ -24,7 +24,7 @@ import VButton from '@/components/VButton.vue';
 import VRequestResponse from '@/components/VRequestResponse.vue';
 import ImageView from '@/components/ImageView.vue';
 import ApiHeader from '@/components/ApiHeader.vue'
-import ApiTag from '@/components/ApiTag.vue'
+import ApiKeyTag from '@/components/ApiKeyTag.vue'
 import ApiHelper from '@/components/ApiHelper.vue';
 
 import responseMixin from '@/mixins/responseMixin.js';
@@ -38,7 +38,7 @@ export default {
     ImageView,
     VRequestResponse,
     ApiHeader,
-    ApiTag,
+    ApiKeyTag,
     ApiHelper
   },
   data: function() {
@@ -65,7 +65,7 @@ export default {
         .then(() => {
           this.$store.commit('toggleIsLoadingResult');
           this.setShowResult();
-          this.setRequestUrlToShow(this.apiUrl);
+          this.setFinalRequestUrlToShow(this.apiUrl);
         });
     },
   },

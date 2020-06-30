@@ -12,7 +12,7 @@ export default {
     return {
     }
   },
-  props: ['inputId', 'val', 'placeholderText'],
+  props: ['inputId', 'value', 'placeholderText'],
   methods: {
     inputSubmit: function() {
       this.$emit('inputSubmit');
@@ -21,7 +21,7 @@ export default {
   computed: {
     inputVal: {
       get() {
-        return this.val;
+        return this.value;
       },
       set(val) {
         this.$emit('input', val);

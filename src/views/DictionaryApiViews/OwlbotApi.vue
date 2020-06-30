@@ -6,13 +6,13 @@
       <div>
         Owlbot is a free dictionary API. It returns details about a word, such as the definition, 
         pronunciation, and type. The result is returned in a JSON object. It also has a npm package 
-        <a href="https://www.npmjs.com/package/owlbot-js"><code class="text-blue-500 hover:underline hover:text-blue-700">owlbot-js</code></a>.
+        <a href="https://www.npmjs.com/package/owlbot-js"><code class="external-links">owlbot-js</code></a>.
       </div>
       <div>
         The API can be accessed through <code>https://owlbot.info/api/v4/dictionary/</code>. Owlbot needs to 
       authenticate the request with an API token which is passed down via the 
       request header, unlike most of the other APIs on this site which uses the URL query string. 
-      For example, this app uses <a href="https://github.com/axios/axios" class="text-blue-500 hover:underline hover:text-blue-700">axios</a> 
+      For example, this app uses <a href="https://github.com/axios/axios" class="external-links">axios</a> 
       and JavaScript to fetch the data with the following code:
       <pre class="mt-2 text-xs bg-gray-300 p-4 rounded-md overflow-x-auto">
 axios.get(`https://owlbot.info/api/v4/dictionary/[word]`, {
@@ -29,14 +29,14 @@ axios.get(`https://owlbot.info/api/v4/dictionary/[word]`, {
       </div>
     </div>
     <div>
-      <ApiTag :requireKey="true"></ApiTag>
+      <ApiKeyTag :requireKey="true"></ApiKeyTag>
     </div>
     <ApiHelper />
 
-    <label for="word">Search Definition:</label>
+    <label for="word">Search Definition: <span class="required-label">*</span></label>
     <VInput @inputSubmit="getApiData" v-model="word" :inputId="'word'"></VInput>
     <VButton @clicked="getApiData"></VButton>
-    <VRequestResponse :showResult="showResult" :requestUrl="urlToShow" :apiResult="apiResult"></VRequestResponse>
+    <VRequestResponse :showResult="showResult" :requestUrl="finalUrlToShow" :apiResult="apiResult"></VRequestResponse>
   </div>
 </template>
 
@@ -46,7 +46,7 @@ import VButton from '@/components/VButton.vue';
 import VRequestResponse from '@/components/VRequestResponse.vue';
 import VInput from '@/components/VInput.vue';
 import ApiHeader from '@/components/ApiHeader.vue';
-import ApiTag from '@/components/ApiTag.vue';
+import ApiKeyTag from '@/components/ApiKeyTag.vue';
 import ApiHelper from '@/components/ApiHelper.vue';
 
 import responseMixin from '@/mixins/responseMixin.js';
@@ -60,14 +60,13 @@ export default {
     VRequestResponse,
     VInput,
     ApiHeader,
-    ApiTag,
+    ApiKeyTag,
     ApiHelper
   },
   data: function() {
     return {
       title: 'Owlbot API',
       apiWebsiteLink: 'https://owlbot.info/',
-      apiKey: process.env.VUE_APP_API_KEY_OWLBOT,
       apiUrl: 'https://owlbot.info/api/v4/dictionary/',
       url: 'http://localhost:3000/dictionaries/owlbot?',
       apiResult: null,
@@ -81,6 +80,7 @@ export default {
       this.axios.get(this.requestUrl)
         .then(response => {
           this.apiResult = response.data;
+          this.setFinalRequestUrlToShow(this.urlToShow);
         })
         .catch(() => this.apiResult = {error: "Something went wrong!"})
         .then(() => {

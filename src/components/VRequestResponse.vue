@@ -1,5 +1,5 @@
 <template>
-  <div v-if="showResult">
+  <div v-if="showResult" class="w-full">
     <VRequestUrl :requestUrl="requestUrl"></VRequestUrl>
     <VJsonResponse :apiResult="apiResult"></VJsonResponse>
   </div>
@@ -19,7 +19,7 @@ export default {
   },
   props: {
     requestUrl: String,
-    apiResult: Object,
+    apiResult: [Object, Array, String],
     showResult: Boolean,
   },
 }

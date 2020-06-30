@@ -16,20 +16,20 @@
     </div>
 
     <div>
-      <ApiTag :requireKey="false"></ApiTag>
+      <ApiKeyTag :requireKey="false"></ApiKeyTag>
     </div>
     <ApiHelper />
 
     <div class="flex flex-wrap flex-col mb-4">
       <div class="flex-none w-full flex flex-col sm:flex-col md:flex-row">
         <div class="flex-1">
-          <label for="image_width">Width (px)</label>
-          <VInputNumber @inputSubmit="getApiData" v-model="imgWidth" :val="imgWidth" :inputId="'image_width'"></VInputNumber>
+          <label for="image_width">Width (px) <span class="required-label">*</span></label>
+          <VInputNumber @inputSubmit="getApiData" v-model="imgWidth" :inputId="'image_width'"></VInputNumber>
         </div>
         <div class="flex-none w-4"></div>
         <div class="flex-1">
-          <label for="image_height">Height (px)</label>
-          <VInputNumber @inputSubmit="getApiData" v-model="imgHeight" :val="imgHeight" :inputId="'image_height'"></VInputNumber>
+          <label for="image_height">Height (px) <span class="required-label">*</span></label>
+          <VInputNumber @inputSubmit="getApiData" v-model="imgHeight" :inputId="'image_height'"></VInputNumber>
         </div>
       </div>
       
@@ -49,7 +49,7 @@
       </div>
     </div>
     <VButton @clicked="getApiData"></VButton>
-    <VRequestResponse :showResult="showResult" :requestUrl="requestUrlToShow"></VRequestResponse>
+    <VRequestResponse :showResult="showResult" :requestUrl="finalUrlToShow"></VRequestResponse>
     <ImageView :imgSrc="imgSrc" />
   </div>
 </template>
@@ -61,7 +61,7 @@ import VRequestResponse from '@/components/VRequestResponse.vue';
 import ImageView from '@/components/ImageView.vue';
 import ApiHeader from '@/components/ApiHeader.vue';
 import ApiHelper from '@/components/ApiHelper.vue';
-import ApiTag from '@/components/ApiTag.vue';
+import ApiKeyTag from '@/components/ApiKeyTag.vue';
 import VInputNumber from '@/components/VInputNumber.vue';
 
 import responseMixin from '@/mixins/responseMixin.js';
@@ -76,7 +76,7 @@ export default {
     ImageView,
     ApiHeader,
     ApiHelper,
-    ApiTag,
+    ApiKeyTag,
     VInputNumber,
   },
   data: function() {
@@ -108,11 +108,11 @@ export default {
                 let base64data = reader.result;
                 this.imgSrc = base64data.toString();
             }
+            this.setFinalRequestUrlToShow(this.urlToShow);
         })
         .then(() => {
           this.$store.commit('toggleIsLoadingResult');
           this.setShowResult();
-          this.setRequestUrlToShow(this.urlToShow);
         });
     },
   },

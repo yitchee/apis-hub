@@ -24,7 +24,7 @@ export default {
     }
   },
   props: {
-    apiResult: [Object, Array],
+    apiResult: [Object, Array, String],
   },
   watch: {
     apiResult: {

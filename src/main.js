@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
-import '@/assets/styles/index.css';
+import '@/assets/styles/index.scss';
 
 import App from './App.vue';
 import router from './router';
